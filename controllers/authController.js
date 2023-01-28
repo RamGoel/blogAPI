@@ -2,6 +2,9 @@ const {userModel} =require('../models/userModel')
 
 exports.createUser=async(req, res) => {
     const { email, password } = req.body;
+    if(!email?.length || !password?.length){
+        return res.status(400).json({message:"Email or Password can't be empty."})
+    }
     const isUserExists=await userModel.find({email:email})
     if(!isUserExists.length){
 
@@ -27,6 +30,9 @@ exports.createUser=async(req, res) => {
 
 exports.loginUser=async(req, res) => {
     const { email, password } = req.body;
+    if(!email?.length || !password?.length){
+        return res.status(400).json({message:"Email or Password can't be empty."})
+    }
     const user = await userModel.find({email :email});
     if (!user.length) {
         return res.status(404).json({
